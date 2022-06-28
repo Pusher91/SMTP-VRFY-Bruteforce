@@ -22,7 +22,7 @@ else:
 
         print(f"\nLines remaining in user list: {user_list_lines}")
         
-        print(f"Connecting to {sys.argv[1]}")
+        print(f"Connecting to: {sys.argv[1]}")
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((target,25))
         response = s.recv(2048)

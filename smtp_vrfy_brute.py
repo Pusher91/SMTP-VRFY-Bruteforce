@@ -1,5 +1,4 @@
 import socket
-import os
 import sys
 import re
 
@@ -21,13 +20,19 @@ else:
 
     count = 0
     for user in user_list:
-        count += 1
-        print(f"{count} | Verifying: {user.strip()}               ", end="\r")
-        vrfy_attempt = (f"VRFY " + user).encode()
-        s.send((f"VRFY " + user).encode())
-        response = s.recv(2048)
+        try:
+            vrfy_attempt = f"VRFY {user}"
+            count += 1
 
-        if re.search(r"^252", response.decode()):
-            print(f"Verified user: {response.decode()}", end="")
+            print(f"{count} | {vrfy_attempt.strip()}               ", end="\r")
+            s.send(vrfy_attempt.encode())
+            response = s.recv(2048)
+
+            if re.search(r"^252", response.decode()):
+                print(f"+ Verified user: {response.decode()}", end="")
+
+        except (ConnectionResetError, BrokenPipeError) as e:
+            print(f"\n\n * ConnectionResetError Encountered * ")
+            break
 
     print("\nBruteforce Complete.")

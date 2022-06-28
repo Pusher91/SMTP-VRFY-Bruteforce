@@ -19,8 +19,10 @@ else:
     
     print(f"Connect response: {response.decode()}")
 
+    count = 0
     for user in user_list:
-        print(f"Verifying: {user.strip()}               ", end="\r")
+        count += 1
+        print(f"{count} | Verifying: {user.strip()}               ", end="\r")
         vrfy_attempt = (f"VRFY " + user).encode()
         s.send((f"VRFY " + user).encode())
         response = s.recv(2048)

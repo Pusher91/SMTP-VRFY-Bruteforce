@@ -29,7 +29,7 @@ else:
             response = s.recv(2048)
 
             if re.search(r"^252", response.decode()):
-                print(f"+ Verified user: {response.decode()}", end="")
+                print(f"+ Verified user: {user}", end="")
 
         except (ConnectionResetError, BrokenPipeError) as e:
             print(f"\n\n* ConnectionResetError encountered - script unable to complete")

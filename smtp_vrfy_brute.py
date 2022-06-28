@@ -32,7 +32,7 @@ else:
                 print(f"+ Verified user: {response.decode()}", end="")
 
         except (ConnectionResetError, BrokenPipeError) as e:
-            print(f"\n\n * ConnectionResetError Encountered * ")
-            break
+            print(f"\n\n* ConnectionResetError encountered - script unable to complete")
+            raise SystemExit()
 
     print("\nBruteforce Complete.")

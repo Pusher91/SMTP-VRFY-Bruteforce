@@ -20,6 +20,7 @@ else:
     print(f"Connect response: {response.decode()}")
 
     for user in user_list:
+        print(f"Verifying: {user.strip()}               ", end="\r")
         vrfy_attempt = (f"VRFY " + user).encode()
         s.send((f"VRFY " + user).encode())
         response = s.recv(2048)

@@ -73,5 +73,11 @@ else:
                 print(verified_users_string_stdout)
                 break
 
+            except KeyboardInterrupt:
+                verified_users_output_file = open("smtp-vrfy-bruteforce.out", "a")
+                verified_users_output_file.write(f"\nKeyboardInterrupt while on line: {count}")
+                verified_users_output_file.close()
+                raise SystemExit()
+
     print("\nBruteforce Complete.")
     print(verified_users_string_stdout)

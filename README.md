@@ -40,7 +40,7 @@ KeyboardInterrupt
 ```
 
 
-##Output File
+## Output File
 ```console
 cat smtp-vrfy-bruteforce.out      
 Target: 10.129.80.226

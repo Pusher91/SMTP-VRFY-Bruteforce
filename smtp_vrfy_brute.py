@@ -8,16 +8,22 @@ if len(sys.argv)!=3:
     print("Example: ./script.py 192.168.1.1 users.txt")
 
 else:
-    target = sys.argv[1]
-    # Define user_list variable here so the script will pick up where left upon reconnect.
-    user_list = open(sys.argv[2], "r")
     
+    # Get lines of user_list in order to break while loop.
     with open(sys.argv[2], "r") as fp:
         for count, line in enumerate(fp):
             pass
     user_list_lines = count+1
 
+    target = sys.argv[1]
+    # open user_list outside before loop so disconnect will not reset list.
+    user_list = open(sys.argv[2], "r")
+    verified_users_list = []
+
+    # Track loop count to display line of file nex to user being verified.
     count = 0
+    
+    # Continue bruteforce / reconnect to target in case of disconnect.
     while user_list_lines:    
 
         print(f"\nLines remaining in user list: {user_list_lines}")
@@ -34,15 +40,18 @@ else:
                 vrfy_attempt = f"VRFY {user}"
                 count += 1
 
-                print(f"{count} | {vrfy_attempt.strip()}               ", end="\r")
+                print(f"{count} | {vrfy_attempt.strip()}         ", end="\r")
                 s.send(vrfy_attempt.encode())
                 response = s.recv(2048)
 
                 if re.search(r"^252", response.decode()):
                     print(f"+ Verified user: {user}", end="")
+                    verified_users_list.append(user.strip())
+                    verified_users_string = ", ".join(verified_users_list)
+                    print(f"+ Users verified: {verified_users_string}")
 
             except (ConnectionResetError, BrokenPipeError) as e:
-                print("\n\n* ConnectionResetError encountered - Reconnecting to target.", end="\r")
+                print("\n\n* Connection Lost - Reconnecting", end="\r")
                 break
 
     print("\nBruteforce Complete.")

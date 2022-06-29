@@ -1,7 +1,7 @@
 # SMTP-VRFY-Bruteforce
 Bruteforce a user list against SMPT using VRFY
 
-```bash
+```console
 python smtp_vrfy_brute.py 10.129.80.226 xato-net-10-million-usernames.txt
 
 Lines remaining in user list: 8295455

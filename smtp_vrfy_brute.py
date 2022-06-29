@@ -32,7 +32,7 @@ else:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((target,25))
         response = s.recv(2048)
-        print(f"Connect response: {response.decode()}")
+        print(f"Connection response: {response.decode()}")
 
         for user in user_list:
             user_list_lines -= 1

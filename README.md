@@ -1,5 +1,5 @@
 # SMTP-VRFY-Bruteforce
-Enumerate users by bruteforcing a user list using SMTP's VRFY command.
+Enumerate users using SMTP's VRFY command
 
 If the connection is lost (i.e. the target drops the connection after too many attempts) it will reconnect and continue bruteforcing where it left off.
 

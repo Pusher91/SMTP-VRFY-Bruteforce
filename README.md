@@ -32,11 +32,7 @@ Connection response: 220 debian.localdomain ESMTP Postfix (Debian/GNU)
 
 Lines remaining in user list: 8295409
 Connecting to: 10.129.80.226
-^CTraceback (most recent call last):
-  File "/home/kali/Documents/htb/Trick/smtp_vrfy_brute.py", line 36, in <module>
-    response = s.recv(2048)
-KeyboardInterrupt
-
+...
 ```
 
 

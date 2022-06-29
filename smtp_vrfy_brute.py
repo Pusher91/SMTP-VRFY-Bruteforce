@@ -19,10 +19,12 @@ else:
     # open user_list outside before loop so disconnect will not reset list.
     user_list = open(sys.argv[2], "r")
     verified_users_list = []
+    verified_users_output_file = open("smtp-vrfy-bruteforce.out", "a")
 
     # Track loop count to display line of file nex to user being verified.
     count = 0
-    
+    # If scan_info_write = 1, then it will not write scan data to the output file again.
+    scan_info_write = 0
     # Continue bruteforce / reconnect to target in case of disconnect.
     while user_list_lines:    
 
@@ -33,6 +35,16 @@ else:
         s.connect((target,25))
         response = s.recv(2048)
         print(f"Connection response: {response.decode()}")
+
+        if scan_info_write == 0:
+            verified_users_output_file = open("smtp-vrfy-bruteforce.out", "a")
+            verified_users_output_file.write(f"Target: {target}\n")
+            verified_users_output_file.write(f"Wordlist used: {user_list.name}\n")
+            verified_users_output_file.write(f"Target header: {response.decode()}\n")
+            verified_users_output_file.write(f"Verified Users:\n")
+            verified_users_output_file.close()
+            scan_info_write += 1
+
 
         for user in user_list:
             user_list_lines -= 1
@@ -46,14 +58,20 @@ else:
 
                 if re.search(r"^252", response.decode()):
                     print(f"+ Verified user: {user}", end="")
+
                     verified_users_list.append(user.strip())
                     verified_users_string = ", ".join(verified_users_list)
-                    print(f"++ Verified users list: {verified_users_string}")
+                    verified_users_string_stdout = f"++ Verified users list: {verified_users_string}"
+                    print(verified_users_string_stdout)
+
+                    verified_users_output_file = open("smtp-vrfy-bruteforce.out", "a")
+                    verified_users_output_file.write(user)
+                    verified_users_output_file.close()
 
             except (ConnectionResetError, BrokenPipeError) as e:
                 print("\n\n* Connection Lost - Reconnecting *")
-                print(f"++ Verified users list: {verified_users_string}")
+                print(verified_users_string_stdout)
                 break
 
     print("\nBruteforce Complete.")
-    print(f"++ Verified users list: {verified_users_string}")
+    print(verified_users_string_stdout)

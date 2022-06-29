@@ -48,10 +48,12 @@ else:
                     print(f"+ Verified user: {user}", end="")
                     verified_users_list.append(user.strip())
                     verified_users_string = ", ".join(verified_users_list)
-                    print(f"+ Users verified: {verified_users_string}")
+                    print(f"++ Verified users list: {verified_users_string}")
 
             except (ConnectionResetError, BrokenPipeError) as e:
-                print("\n\n* Connection Lost - Reconnecting", end="\r")
+                print("\n\n* Connection Lost - Reconnecting *")
+                print(f"++ Verified users list: {verified_users_string}")
                 break
 
     print("\nBruteforce Complete.")
+    print(f"++ Verified users list: {verified_users_string}")

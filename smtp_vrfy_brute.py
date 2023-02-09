@@ -20,7 +20,8 @@ else:
     user_list = open(sys.argv[2], "r")
     verified_users_list = []
     verified_users_output_file = open("smtp-vrfy-bruteforce.out", "a")
-
+    verified_users_string_stdout = ""
+    
     # Track loop count to display line of file nex to user being verified.
     count = 0
     # If scan_info_write = 1, then it will not write scan data to the output file again.
